@@ -24,10 +24,11 @@ Parse.serverURL = 'https://qtut.back4app.io';
     //     console.error(err2);
     // });
 
-    // Parse.Cloud.run('userSetField', {
-    //     'userObjectId' : 'id',
-    //     'field' : 'premium',
-    //     'value' : true
+    // Parse.Cloud.run('userUpdate', {
+    //     'user' : {
+    //         'objectId' : 'id',
+    //         'name' : 'novo nome'
+    //     }
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {
@@ -61,5 +62,27 @@ Parse.serverURL = 'https://qtut.back4app.io';
 
 //----------------- Cloud Code Tests for Product Functions -----------------//
 {
+    // Parse.Cloud.run('productCreate', {
+    //     'name' : 'quiches',
+    //     'price' : 2.5,
+    //     'description' : 'quiches quentinhos',
+    //     'pictures' : ['https://i.imgur.com/COQWrQy.jpg', 'https://i.imgur.com/h9o3LpK.jpg'],
+    //     'tags' : ['salgadoce', 'quentinho'],
+    //     'creatorObjectId' : 'j7zw7z0OA2'
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
 
+    // Parse.Cloud.run('productUpdate', {
+    //     'product' : {
+    //         'objectId' : '1XJyshmjvf',
+    //         'price' : 3
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
 }
