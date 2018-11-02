@@ -57,15 +57,47 @@ Parse.Cloud.define('productUpdate', (request, response) => {
     productQuery.equalTo('objectId', product.objectId);
     productQuery.first({ useMasterKey : true })
         .then((productToBeUpdated) => {
-            Object.keys(product).forEach(field => {
-                productToBeUpdated.set(field, product[field]);
-            });
-            productToBeUpdated.save(null, { useMasterKey : true })
-                .then((productUpdated) => {
-                    response.success(productUpdated);
-                }).catch((err) => {
-                    response.error(err.code, err.message);
+            if (productToBeUpdated != undefined) {
+                Object.keys(product).forEach(field => {
+                    productToBeUpdated.set(field, product[field]);
                 });
+                productToBeUpdated.save(null, { useMasterKey : true })
+                    .then((productUpdated) => {
+                        response.success(productUpdated);
+                    }).catch((err) => {
+                        response.error(err.code, err.message);
+                    });
+            }
+            else {
+                response.error(404, `Product was not found for ${productObjectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
+
+/**
+ * @name productDelete
+ * @param {string} productObjectId
+ */
+Parse.Cloud.define('productDelete', (request, response) => {
+    const productObjectId = request.params.productObjectId;
+
+    const productQuery = new Parse.Query(Product);
+    productQuery.equalTo('objectId', productObjectId);
+    productQuery.first({ useMasterKey : true })
+        .then((product) => {
+            if (product != undefined) {
+                product.destroy({ useMasterKey : true })
+                    .then((result) => {
+                        response.success('Product was deleted');
+                    }).catch((err) => {
+                        response.error(err.code, err.message);
+                    });
+            }
+            else {
+                response.error(404, `Product was not found for ${productObjectId}`);
+            }
         }).catch((err) => {
             response.error(err.code, err.message);
         });

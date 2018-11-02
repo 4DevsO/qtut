@@ -77,9 +77,17 @@ Parse.serverURL = 'https://qtut.back4app.io';
 
     // Parse.Cloud.run('productUpdate', {
     //     'product' : {
-    //         'objectId' : '1XJyshmjvf',
+    //         'objectId' : 'id',
     //         'price' : 3
     //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('productDelete', {
+    //     'productObjectId' : 'id',
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {
