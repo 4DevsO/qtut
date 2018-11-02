@@ -77,7 +77,7 @@ Parse.serverURL = 'https://qtut.back4app.io';
 
     // Parse.Cloud.run('productUpdate', {
     //     'product' : {
-    //         'objectId' : 'id',
+    //         'objectId' : 'i9cK5UgcEP',
     //         'price' : 3
     //     }
     // }).then((result) => {
@@ -87,10 +87,18 @@ Parse.serverURL = 'https://qtut.back4app.io';
     // });
 
     // Parse.Cloud.run('productDelete', {
-    //     'productObjectId' : 'id',
+    //     'productObjectId' : 'i9cK5UgcEP',
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {
     //     console.error(err);
     // });
+
+    Parse.Cloud.run('productGet', {
+        'productObjectId' : 'i9cK5UgcEP',
+    }).then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.error(err);
+    });
 }

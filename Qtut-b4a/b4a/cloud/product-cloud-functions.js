@@ -102,3 +102,25 @@ Parse.Cloud.define('productDelete', (request, response) => {
             response.error(err.code, err.message);
         });
 });
+
+/**
+ * @name productGet
+ * @param {string} productObjectId
+ */
+Parse.Cloud.define('productGet', (request, response) => {
+    const productObjectId = request.params.productObjectId;
+
+    const productQuery = new Parse.Query(Product);
+    productQuery.equalTo('objectId', productObjectId);
+    productQuery.first({ useMasterKey : true })
+        .then((product) => {
+            if (product != undefined) {
+                response.success(product);
+            }
+            else {
+                response.error(404, `Product was not found for ${productObjectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
