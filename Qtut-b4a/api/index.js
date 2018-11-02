@@ -35,7 +35,7 @@ app.get('/hello || /', (req, res) =>  {
             res.send(err).status(500);
         });
 });
-ß
+
 // Set User ACL
 app.post('/user/setUsersAcls', (req, res) => {
     if (req.body != undefined && req.body.user != undefined) {
