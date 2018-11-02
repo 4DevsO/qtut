@@ -46,24 +46,22 @@ Parse.Cloud.define('userSignIn', (request, response) => {
 });
 
 /**
- * @name userSetField
+ * @name userUpdate
  * @description create/update value for field in user
- * @param {string} userObjectId
- * @param {string} fieldName
- * @param {any} fieldValue
+ * @param {User{objectId, [params]}} user
  */
-Parse.Cloud.define('userSetField', (request, response) => {
-    const userObjectId = request.params.userObjectId;
-    const fieldName = request.params.field;
-    const fieldValue = request.params.value;
+Parse.Cloud.define('userUpdate', (request, response) => {
+    const user = request.params.user;
 
     const userQuery = new Parse.Query(Parse.User);
-    userQuery.equalTo('objectId', userObjectId);
+    userQuery.equalTo('objectId', user.objectId);
     userQuery.first({ useMasterKey : true })
-        .then((user) => {
-            if (user != undefined) {
-                user.set(fieldName, fieldValue);
-                user.save(null, { useMasterKey : true })
+        .then((userToBeUpdated) => {
+            if (userToBeUpdated != undefined) {
+                Object.keys(user).forEach(field => {
+                    userToBeUpdated.set(field, user[field]);
+                });
+                userToBeUpdated.save(null, { useMasterKey : true })
                     .then((result) => {
                         response.success(result);
                     }).catch((err) => {
@@ -71,7 +69,7 @@ Parse.Cloud.define('userSetField', (request, response) => {
                     });
             }
             else {
-                response.error(404, `User not found for ${userObjectId}`);
+                response.error(404, `User not found for ${user.objectId}`);
             }
         }).catch((err) => {
             response.error(err.code, err.message);
@@ -116,7 +114,6 @@ Parse.Cloud.define('userResetPassword', (request, response) => {
             response.error(err.code, err.message);
         });
 });
-
 
 /**
  * @name userDelete
