@@ -63,11 +63,11 @@ Parse.serverURL = 'https://qtut.back4app.io';
 //----------------- Cloud Code Tests for Product Functions -----------------//
 {
     // Parse.Cloud.run('productCreate', {
-    //     'name' : 'quiches',
-    //     'price' : 2.5,
-    //     'description' : 'quiches quentinhos',
-    //     'pictures' : ['https://i.imgur.com/COQWrQy.jpg', 'https://i.imgur.com/h9o3LpK.jpg'],
-    //     'tags' : ['salgadoce', 'quentinho'],
+    //     'name' : 'PCL',
+    //     'price' : 4,
+    //     'description' : 'famoso pao com linguiça',
+    //     'pictures' : ['https://i.imgur.com/iVtRVWj.jpg'],
+    //     'tags' : ['sanduiche', 'quentinho'],
     //     'creatorObjectId' : 'j7zw7z0OA2'
     // }).then((result) => {
     //     console.log(result);
@@ -87,18 +87,28 @@ Parse.serverURL = 'https://qtut.back4app.io';
     // });
 
     // Parse.Cloud.run('productDelete', {
-    //     'productObjectId' : 'i9cK5UgcEP',
+    //     'productObjectId' : 'i9cK5UgcEP'
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {
     //     console.error(err);
     // });
 
-    Parse.Cloud.run('productGet', {
-        'productObjectId' : 'i9cK5UgcEP',
-    }).then((result) => {
-        console.log(result);
-    }).catch((err) => {
-        console.error(err);
-    });
+    // Parse.Cloud.run('productGet', {
+    //     'productObjectId' : 'i9cK5UgcEP'
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+    
+    // Parse.Cloud.run('productGetByFilter', {
+    //     'filter' : {
+    //         'tags' : ['quentinho', 'salgadoce']
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
 }

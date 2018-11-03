@@ -3,6 +3,7 @@ const Product = Parse.Object.extend('Product');
 
 /**
  * @name productCreate
+ * @description create a new product
  * @param {string} name
  * @param {number} price
  * @param {string} description
@@ -48,7 +49,8 @@ Parse.Cloud.define('productCreate', (request, response) => {
 
 /**
  * @name productUpdate
- * @param {Product{objectId, [params]}} product
+ * @description update one product
+ * @param {Product{objectId, ...params}} product
  */
 Parse.Cloud.define('productUpdate', (request, response) => {
     const product = request.params.product;
@@ -78,6 +80,7 @@ Parse.Cloud.define('productUpdate', (request, response) => {
 
 /**
  * @name productDelete
+ * @description delete one product
  * @param {string} productObjectId
  */
 Parse.Cloud.define('productDelete', (request, response) => {
@@ -105,6 +108,7 @@ Parse.Cloud.define('productDelete', (request, response) => {
 
 /**
  * @name productGet
+ * @description get one product by it's objectId
  * @param {string} productObjectId
  */
 Parse.Cloud.define('productGet', (request, response) => {
@@ -119,6 +123,39 @@ Parse.Cloud.define('productGet', (request, response) => {
             }
             else {
                 response.error(404, `Product was not found for ${productObjectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
+
+/**
+ * @name productGetByFilter
+ * @description get products by N params
+ * @param {filter{...string : any}}
+ */
+Parse.Cloud.define('productGetByFilter', (request, response) => {
+    const filter = request.params.filter;
+
+    const productQuery = new Parse.Query(Product);
+    Object.keys(filter).forEach(field => {
+        if (typeof(filter[field]) == typeof('string')) {
+            productQuery.contains(field, filter[field]);
+        }
+        else if (typeof(filter[field]) == typeof([])) {
+            productQuery.containedIn(field, filter[field]);
+        }
+        else {
+            productQuery.equalTo(field, filter[field]);
+        }
+    });
+    productQuery.find({ useMasterKey : true })
+        .then((products) => {
+            if (products.length > 0) {
+                response.success(products);
+            }
+            else {
+                response.error(404, `No products were found for the filter ${filter}`);
             }
         }).catch((err) => {
             response.error(err.code, err.message);
