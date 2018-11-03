@@ -104,8 +104,27 @@ Parse.serverURL = 'https://qtut.back4app.io';
     
     // Parse.Cloud.run('productGetByFilter', {
     //     'filter' : {
-    //         'tags' : ['quentinho', 'salgadoce']
+    //         'tags' : ['quentinho', 'salgadoce'],
+    //         'userObjectId' : 'j7zw7z0OA2'
     //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+}
+
+//----------------- Cloud Code Tests for Sale Functions -----------------//
+{
+    // Parse.Cloud.run('saleCreate', {
+    //     'fixed' : true,
+    //     'products' : ['i9cK5UgcEP', 'NMh7ECSMIa'],
+    //     'mainProductObjectId' : 'i9cK5UgcEP',
+    //     'card' : true,
+    //     'closeTime' : new Date(2018, 11, 3, 17, 30),
+    //     'location' : new Parse.GeoPoint({latitude : -14.798976, longitude : -39.172180}),
+    //     'locationDescription' : 'NBCGIB Sala 18',
+    //     'creatorObjectId' : 'j7zw7z0OA2'
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {
