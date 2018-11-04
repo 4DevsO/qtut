@@ -79,3 +79,63 @@ Parse.Cloud.define('saleCreate', (request, response) => {
             response.error(err.code, err.message);
         });
 });
+
+/**
+ * @name saleDelete
+ * @description delete one sale
+ * @param {string} saleObjectId 
+ */
+Parse.Cloud.define('saleDelete', (request, response) => {
+    const saleObjectId = request.params.saleObjectId;
+
+    const saleQuery = new Parse.Query(Sale);
+    saleQuery.equalTo('objectId', saleObjectId);
+    saleQuery.first({ useMasterKey : true })
+        .then((sale) => {
+            if (sale != undefined) {
+                sale.destroy({ useMasterKey : true })
+                    .then((result) => {
+                        response.success('Sale was deleted');
+                    })
+                    .catch((err) => {
+                        response.error(err.code, err.message);
+                    });
+            }
+            else {
+                response.error(404, `Sale was not found for ${saleObjectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
+
+/**
+ * @name saleUpdate
+ * @description update one sale
+ * @param {Sale{objectId, ...params}} sale
+ */
+Parse.Cloud.define('saleUpdate', (request, response) => {
+    const sale = request.params.sale;
+
+    const saleQuery = new Parse.Query(Sale);
+    saleQuery.equalTo('objectId', sale.objectId);
+    saleQuery.first({ useMasterKey : true })
+        .then((saleToBeUpdated) => {
+            if (saleToBeUpdated != undefined) {
+                Object.keys(sale).forEach(field => {
+                    saleToBeUpdated.set(field, sale[field]);
+                });
+                saleToBeUpdated.save(null, { useMasterKey : true })
+                    .then((saleUpdated) => {
+                        response.success(saleUpdated);
+                    }).catch((err) => {
+                        response.error(err.code, err.message);
+                    });
+            }
+            else {
+                response.error(404, `Sale was not found for ${sale.objectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
