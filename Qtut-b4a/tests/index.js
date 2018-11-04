@@ -121,10 +121,59 @@ Parse.serverURL = 'https://qtut.back4app.io';
     //     'products' : ['i9cK5UgcEP', 'NMh7ECSMIa'],
     //     'mainProductObjectId' : 'i9cK5UgcEP',
     //     'card' : true,
-    //     'closeTime' : new Date(2018, 11, 3, 17, 30),
+    //     'closeTime' : new Date(2018, 10, 5, 17, 30),
     //     'location' : new Parse.GeoPoint({latitude : -14.798976, longitude : -39.172180}),
     //     'locationDescription' : 'NBCGIB Sala 18',
     //     'creatorObjectId' : 'j7zw7z0OA2'
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('saleUpdate', {
+    //     'sale' : {
+    //         'objectId' : 'BP3LANkljS',
+    //         'fixed' : false
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('saleDelete', {
+    //     'saleObjectId' : 'BP3LANkljS'
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('saleGet', {
+    //     'saleObjectId' : 'OwP3YRScv3'
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('saleGetByFilter', {
+    //     'filter' : {
+    //         'fixed' : false
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((err) => {
+    //     console.error(err);
+    // });
+
+    // Parse.Cloud.run('saleGetByLocationRadius', {
+    //     'location' : {
+    //         'latitude' : -14.794944,
+    //         'longitude' : -39.175435 
+    //     },
+    //     'radius' : 0.6
     // }).then((result) => {
     //     console.log(result);
     // }).catch((err) => {

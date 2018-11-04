@@ -139,3 +139,84 @@ Parse.Cloud.define('saleUpdate', (request, response) => {
             response.error(err.code, err.message);
         });
 });
+
+/**
+ * @name saleGet
+ * @description get one sale by objectId
+ * @param {string} saleObjectId
+ */
+Parse.Cloud.define('saleGet', (request, response) => {
+    const saleObjectId = request.params.saleObjectId;
+
+    const saleQuery = new Parse.Query(Sale);
+    saleQuery.equalTo('objectId', saleObjectId);
+    saleQuery.first({ useMasterKey : true })
+        .then((sale) => {
+            if (sale != undefined) {
+                response.success(sale);
+            }
+            else {
+                response.error(404, `Sale was not found for ${saleObjectId}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
+
+/**
+ * @name saleGetByFilter
+ * @description get sales by filter
+ * @param {filter{...string : any}} filter
+ */
+Parse.Cloud.define('saleGetByFilter', (request, response) => {
+    const filter = request.params.filter;
+
+    const saleQuery = new Parse.Query(Sale);
+    Object.keys(filter).forEach(field => {
+        if (typeof(filter[field]) == typeof('string')) {
+            saleQuery.contains(field, filter[field]);
+        }
+        else if (typeof(filter[field]) == typeof([])) {
+            saleQuery.containedIn(field, filter[field]);
+        }
+        else {
+            saleQuery.equalTo(field, filter[field]);
+        }
+    });
+    saleQuery.find({ useMasterKey : true })
+        .then((sales) => {
+            if (sales.length > 0) {
+                response.success(sales);
+            }
+            else {
+                response.error(404, `No sales were found for the filter ${JSON.stringify(filter)}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});
+
+/**
+ * @name saleGetByLocationRadius
+ * @description get sales by location proximity
+ * @param {geopoint} location
+ * @param {number} radius
+ */
+Parse.Cloud.define('saleGetByLocationRadius', (request, response) => {
+    const location = request.params.location;
+    const radius = request.params.radius;
+    
+    const saleQuery = new Parse.Query(Sale);
+    saleQuery.withinKilometers('location', location, radius, true);
+    saleQuery.find({ useMasterKey : true })
+        .then((sales) => {
+            if (sales.length > 0) {
+                response.success(sales);
+            }
+            else {
+                response.error(404, `No sales were found for the ${radius}km and location ${JSON.stringify(location)}`);
+            }
+        }).catch((err) => {
+            response.error(err.code, err.message);
+        });
+});

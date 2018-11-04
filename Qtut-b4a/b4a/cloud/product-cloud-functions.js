@@ -132,7 +132,7 @@ Parse.Cloud.define('productGet', (request, response) => {
 /**
  * @name productGetByFilter
  * @description get products by N params
- * @param {filter{...string : any}}
+ * @param {filter{...string : any}} filter
  */
 Parse.Cloud.define('productGetByFilter', (request, response) => {
     const filter = request.params.filter;
@@ -155,7 +155,7 @@ Parse.Cloud.define('productGetByFilter', (request, response) => {
                 response.success(products);
             }
             else {
-                response.error(404, `No products were found for the filter ${filter}`);
+                response.error(404, `No products were found for the filter ${JSON.stringify(filter)}`);
             }
         }).catch((err) => {
             response.error(err.code, err.message);
