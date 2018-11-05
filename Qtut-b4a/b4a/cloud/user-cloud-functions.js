@@ -146,6 +146,7 @@ Parse.Cloud.define('userDelete', (request, response) => {
 /**
  * @name userSetAcls
  * @description set acls for current user
+ * @param {Parse.User} user
  */
 
 Parse.Cloud.define('userSetAcls', (request, response) => {
